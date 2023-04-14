@@ -4973,6 +4973,13 @@ static void smblib_otg_oc_work(struct work_struct *work)
 		smblib_otg_oc_exit(chg, false);
 		goto unlock;
 	}
+	
+	#ifdef CONFIG_FORCE_FAST_CHARGE
+	if (force_fast_charge > 0 && icl_ua == USBIN_500MA)
+	{
+		icl_ua = USBIN_1000MA;
+	}
+          #endif
 
 	/*
 	 * The real time status should go low within 10ms. Poll every 1-2ms to
