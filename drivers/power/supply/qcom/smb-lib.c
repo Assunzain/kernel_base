@@ -25,6 +25,10 @@
 #include "step-chg-jeita.h"
 #include "storm-watch.h"
 
+#ifdef CONFIG_FORCE_FAST_CHARGE
+#include <linux/fastchg.h>
+#endi
+
 #define smblib_err(chg, fmt, ...)		\
 	pr_err("%s: %s: " fmt, chg->name,	\
 		__func__, ##__VA_ARGS__)	\
@@ -4609,6 +4613,7 @@ irqreturn_t smblib_handle_usb_typec_change(int irq, void *data)
 	smblib_usb_typec_change(chg);
 	mutex_unlock(&chg->lock);
 	return IRQ_HANDLED;
+
 }
 
 irqreturn_t smblib_handle_dc_plugin(int irq, void *data)
